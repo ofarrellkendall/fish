@@ -1,5 +1,22 @@
 ---
 title: "fish"
+image: IMG_1554.jpg
+HUZZAH: 
+  template: trestles
+  image-shape: squared
+  image-width: 20em
+  links:
+    - text: State Fishing Manual
+      href: https://dlnr.hawaii.gov/dar/files/2014/04/fishes_of_hawaii.pdf
+      
+    - text: Reef Fish Species Gallery
+    href: https://www.reef.org/species/galleries/hawaii
+    
+    - text: Landfishing
+    href: https://www.youtube.com/watch?v=9DcVNNExvNU
+    
+    - text: Email the website's owner
+      href: mailto:kofarrell28@gmail.com
 ---
 
 ```{r}
@@ -17,6 +34,9 @@ packageLoad <-
 packageLoad(c("tidyverse", "palmerpenguins", "rmarkdown", "ggthemes",
               "RColorBrewer", "viridis", "ggdark", "plotly", "lterdatasampler", "rstatix", "usethis"))
  
+```
+
+```{}
 ```
 
 This is a Quarto website.
