@@ -1,0 +1,4 @@
+---
+title: "Data Source"
+description: "Ecosystem Sciences Division, Pacific Islands Fisheries Science Center (2025). National Coral Reef Monitoring Program: Stratified Random Surveys (StRS) of Reef Fish across the Hawaiian Archipelago from 2024-05-13 to 2024-08-27 (NCEI Accession 0300659). https://www.ncei.noaa.gov/archive/accession/0300659. In NOAA Pacific Islands Fisheries Science Center, Ecosystem Sciences Division. National Coral Reef Monitoring Program: Stratified random surveys (StRS) of reef fish, including benthic estimate data of the Hawaiian Archipelago. [Oahu Island Subset]. NOAA National Centers for Environmental Information. Dataset. https://doi.org/10.7289/v59c6vr5. Accessed [12/05/2025]."
+---

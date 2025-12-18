@@ -1,25 +1,44 @@
 ---
 title: "fish"
-image: IMG_1554.jpg
-HUZZAH: 
-  template: trestles
-  image-shape: squared
-  image-width: 20em
+execute:
+   echo: false
+message: false
+warning: false
+results: hide
+
+image: IMG_1554.jpg 
+about: 
+  template: solana
+  image-shape: rectangle
+  image-width: 30em
   links:
     - text: State Fishing Manual
+      icon: egg
       href: https://dlnr.hawaii.gov/dar/files/2014/04/fishes_of_hawaii.pdf
       
     - text: Reef Fish Species Gallery
-    href: https://www.reef.org/species/galleries/hawaii
+      icon: vinyl
+      href: https://www.reef.org/species/galleries/hawaii
     
     - text: Landfishing
-    href: https://www.youtube.com/watch?v=9DcVNNExvNU
+      icon: piggy-bank-fill
+      href: https://www.youtube.com/watch?v=9DcVNNExvNU
     
     - text: Email the website's owner
-      href: mailto:kofarrell28@gmail.com
+      icon: virus
+      href: mailto:kendallofarrell28@gmail.com
 ---
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| results: hide
+```
+
+```{r}
+#| echo: false
+#| results: hide
 packageLoad <-
   function(x) {
     for (i in 1:length(x)) {
@@ -32,17 +51,535 @@ packageLoad <-
 
 
 packageLoad(c("tidyverse", "palmerpenguins", "rmarkdown", "ggthemes",
-              "RColorBrewer", "viridis", "ggdark", "plotly", "lterdatasampler", "rstatix", "usethis"))
+              "RColorBrewer", "viridis", "ggdark", "plotly", "lterdatasampler", "rstatix", "usethis", "janitor"))
+  NULL 
  
 ```
 
-```{}
-```
+## Summary
 
-This is a Quarto website.
+#### Introduction:
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+The overarching goal of this study was to provide the O’ahu spearfisher a glimpse into the statistics behind their prey and their prey’s habitats. In other words, what can be pulled from data to shed light on where their desired fish species are found. To do so, The 2024 Hawai’i Reef Fish Survey data set from NOAA was used. The original aim was to compare the various environmental conditions data points (i.e. percent soft coral cover, hard coral cover, sponge cover, sand cover, clam cover, ect.) to fish species to determine if there were trends in what areas desirable fish species were observed. Unfortunately, when the dataset was paired down to observations strictly for O’ahu there were no data points for environmental conditions. So, the study pivoted to look at what data was available: Depth and Tropic group. The result culminated in the exploration of two main questions: Whether there is a significant difference in depth observed between tropic groups, and whether there is a significant difference in depth observed between species. These two questions are not independent as species determine tropic groups, but both hypothesis testing allows for results to be interpreted through two lenses that are important to the spearfisher because predators happen to taste better.
+
+#### Methods:
+
+##### Data Filtering
+
+First the data set was made relevant to our study's goal. It was paired down to include only observations from the island of O’ahu, then to observations only from to the shallow (0-6 m) and mid 6-18m) depth bins, and observations of edible fish species.  Once here, data exploration showed that only 9 species had enough observations (n\>/= 15) to hold up statistically. So, after the exploratory data visualization section, a further paired down data set with only the top 9 species was used. Certain species that are most relevant to the O’ahu Spearfisher, such as the much-coveted Kumu (Common name: Whitesaddle Goatfish), only had 2 observations and so were not able to be used in the analysis.
+
+##### Analysis
+
+Given that tropic group is a categorical variable there were no two continuous variables to make linear regression models and search for correlations. So, histograms, an Anova test, and box plots were used to explore the relationship between depth and fish species, and depth and tropic group.
+
+##### Results
+
+Depth distributions of edible reef fish on Oʻahu vary significantly both among trophic groups and among commonly observed edible species which aligns with ecological knowledge.
+
+##### Conclusion
+
+In conclusion, Spearfishers of O’ahu you are just one shallow water blackout from a tastier dinner!
+
+## **Exploratory Data Visualizations**
 
 ```{r}
-1 + 1
+#| echo: false
+#| results: hide
+ncrmp_fish_raw <- read_csv("NCRMP_FISH_SPC_HAWAII_2024.csv")
+NULL 
 ```
+
+```{r}
+#| echo: false
+#| results: hide
+ncrmp_fish <- ncrmp_fish_raw |>
+  clean_names()
+
+glimpse(ncrmp_fish)
+summary(ncrmp_fish)
+NULL 
+```
+
+```{r}
+#| echo: false
+#| results: hide
+ncrmp_fish_clean <- ncrmp_fish %>%
+  select(
+    island,
+    site,
+    depth_bin,
+    date,
+    depth,
+   species, taxonname, commonname, trophic
+  )
+NULL
+```
+
+```{r}
+#| echo: false
+#| results: hide
+ncrmp_fish_oahu <- ncrmp_fish_clean %>%
+  filter(island == "Oahu")%>%
+ filter(depth_bin %in% c("Shallow", "Mid"))
+#i am interesred in analyzing this data for spear fishing on Oahu purposes so that is why i am only taking data shallow to mid (0-18 meters) 
+NULL
+```
+
+```{r}
+#| echo: false
+#| results: hide
+ncrmp_fish_oahu |>
+  distinct(commonname)
+trophic_counts <- ncrmp_fish_oahu |>
+  count(trophic)
+
+trophic_counts
+ggplot(trophic_counts, aes(x = trophic, y = n)) +
+  geom_col() +
+  theme_minimal() +
+  labs(
+    title = "Trophic Group Composition of Reef Fish on Oʻahu",
+    x = "Trophic Group",
+    y = "Number of Observations"
+  )
+
+NULL
+```
+
+```{r}
+#| echo: false
+#| results: hide
+unique(ncrmp_fish_oahu$commonname)
+NULL 
+```
+
+```{r}
+#| echo: false
+#| results: hide
+#list of edible/ spearfished species
+spearfished <- c(
+  "Bluefin trevally",
+  "Blue trevally",
+  "Blacktail snapper",
+  "Green jobfish",
+  "Small toothed jobfish",
+  "Peacock hind",
+  "Common bluestripe snapper",
+  "Yellowstripe goatfish",
+  "Yellowfin goatfish",
+  "Whitesaddle goatfish",
+  "Twosaddle goatfish",
+  "Goldsaddle goatfish",
+  "Sidespot goatfish",
+  "Manybar goatfish",
+  "Convict surgeonfish",
+  "Brown surgeonfish",
+  "Ringtail surgeonfish",
+  "Eyestripe surgeonfish",
+  "Whitebar surgeonfish",
+  "Bluelined surgeonfish",
+  "Yellow tang",
+  "Sailfin tang",
+  "Spotted surgeonfish",
+  "Lined surgeonfish",
+  "Whitecheek surgeonfish",
+  "Common parrotfish",
+  "Ember parrotfish",
+  "Daisy parrotfish",
+  "Regal parrot",
+  "Parrotfish species")
+NULL
+```
+
+```{r}
+#| echo: false
+ncrmp_fish_oahu <- ncrmp_fish_oahu %>%
+  mutate(
+    spearfishable = commonname %in% spearfished  )
+  NULL 
+```
+
+```{r}
+#| echo: false
+ncrmp_spearfish <- ncrmp_fish_oahu %>%
+  filter(spearfishable)
+  NULL 
+```
+
+```{r}
+#| echo: false
+kumu <- ncrmp_fish_oahu %>%
+  filter(commonname == "Whitesaddle goatfish")
+
+goatfish <- ncrmp_spearfish %>% 
+  filter(commonname %in% c("Yellowstripe goatfish",
+  "Yellowfin goatfish",
+  "Whitesaddle goatfish",
+  "Twosaddle goatfish",
+  "Goldsaddle goatfish",
+  "Sidespot goatfish",
+  "Manybar goatfish"))
+NULL
+```
+
+```{r}
+#| echo: false
+#function
+summarize_depth_by_species <- function(data, species_name) {
+  data %>%
+    filter(commonname == species_name) %>%
+    summarise(
+      mean_depth = mean(depth, na.rm = TRUE),
+      median_depth = median(depth, na.rm = TRUE),
+      sd_depth = sd(depth, na.rm = TRUE),
+      n = n())}
+  NULL 
+```
+
+```{r}
+#| echo: false
+invisible(Xsummary <- map_dfr(
+  c("Bluefin trevally", "Whitesaddle goatfish"),
+  ~ summarize_depth_by_species(ncrmp_spearfish, .x)
+))
+
+NULL
+```
+
+```{r}
+#| echo: false
+spearfish_counts <-  ncrmp_spearfish %>%
+  count(commonname)
+
+ggplot(spearfish_counts, aes(x = reorder(commonname, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  theme_minimal() +
+  labs(
+    title = "Counts of Edible Reef Fish on Oʻahu",
+    x = "Species (Common Name)",
+    y = "Number of Observations"
+  )
+
+#top 10
+top_spearfish <- spearfish_counts %>%
+  slice_max(n, n = 10)
+
+ggplot(top_spearfish, aes(x = reorder(commonname, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  theme_minimal() +
+  labs(
+    title = "Top 10 Edible Reef Fish on Oʻahu",
+    x = "Species (Common Name)",
+    y = "Number of Observations"
+  )
+#by depth
+ncrmp_fish_oahu %>%
+  filter(spearfishable) %>%
+  count(depth_bin, commonname) %>%
+  ggplot(aes(x = reorder(commonname, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ depth_bin) +
+  theme_minimal() +
+  labs(
+    title = "Edible Species Counts by Depth Bin on Oʻahu",
+    x = "Species (Common Name)",
+    y = "Number of Observations"
+  )
+NULL
+```
+
+```{r}
+#| echo: false
+ #exploring  fish richness and tropic levels faceted by depth 
+          ncrmp_spearfish2 <- ncrmp_spearfish %>%
+            mutate(
+              trophic = case_when(
+                trophic == "H" ~ "Herbivore",
+                trophic == "MI" ~ "Mobile Invertivore",
+                trophic == "Pisc" ~ "Piscivore",
+                TRUE ~ trophic
+              )
+            )
+
+
+          trophic_depth_counts <- ncrmp_spearfish2 %>%
+            count(depth_bin, trophic)
+
+  
+
+         invisible(unique(ncrmp_spearfish2$trophic))
+
+          ggplot(trophic_depth_counts,
+                 aes(x = reorder(trophic, n), y = n)) +
+            geom_col() +
+            coord_flip() +
+            facet_wrap(~ depth_bin) +
+           dark_theme_classic() +
+
+            labs(
+              title = "Trophic Composition of Edible Reef Fish by Depth on Oʻahu",
+              x = "Trophic Level",
+              y = "Number of Observations"
+            )
+NULL 
+```
+
+```{r}
+#| echo: false
+use_me_species <- ncrmp_spearfish2 %>%
+  filter (commonname %in% c(
+  "Whitebar surgeonfish", "Bluelined surgeonfish", "Convict surgeonfish", "Spotted surgeonfish",  "Brown surgeonfish","Daisy parrotfish", "Eyestripe surgeonfish", "Common parrotfish", "Manybar goatfish"))
+
+
+NULL
+```
+
+```{r}
+#| echo: false
+#exploring specific depths by species
+depth_by_species <- ncrmp_spearfish2 %>%
+  filter(!is.na(depth)) %>%
+  group_by(commonname) %>%
+  summarise(
+    mean_depth = mean(depth),
+    median_depth = median(depth),
+    sd_depth = sd(depth),
+    n = n(),
+    .groups = "drop"
+  ) %>%
+  arrange(mean_depth)
+
+NULL
+```
+
+```{r}
+#| echo: false
+#species with more than 15 observations
+depth_by_species_filtered <- depth_by_species %>%
+  filter(n >= 15)
+
+#top 15 species despite # of oberservations 
+top_species <- ncrmp_spearfish2 %>%
+  count(commonname, sort = TRUE) %>%
+  slice_max(n, n = 15)
+
+invisible(unique(depth_by_species_filtered$commonname))
+
+#pulled code forward to help wiht flow
+use_me_species <- ncrmp_spearfish2 %>%
+  filter (commonname %in% c(
+  "Whitebar surgeonfish", "Bluelined surgeonfish", "Convict surgeonfish", "Spotted surgeonfish",  "Brown surgeonfish","Daisy parrotfish", "Eyestripe surgeonfish", "Common parrotfish", "Manybar goatfish"))
+
+NULL
+```
+
+## Is There a Significant Difference in Depth Between the Most Frequently Observed Edible Fish Species?
+
+Testing assumptions results: Two of the nine fish species are normally distributed, while the others are not. Variance is equal (p-value = 0.539)
+
+Then, the ANOVA test p-value= 3.16e-12 confirms that, yes, the depths between the selected species do vary significantly.
+
+```{r}
+#| echo: false
+#graph distribution of spearfish species with >15 observations
+use_me_species %>%
+  ggplot(aes(x = reorder(commonname, depth, FUN = median),
+             y = depth)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(
+    title = "Depth Distributions of Common, Edible Reef Fish O'ahu",
+    x = "Species",
+    y = "Depth (m)",
+    caption = "NOAA 2024 Data ")+
+      dark_theme_classic()+
+       theme(
+    axis.title = element_text(face = "bold", size = 10),
+    plot.title = element_text(face = "bold",size = 12, margin = unit(c(1,1,1,1), "cm")),
+    plot.subtitle = element_text(size = 10, margin = unit(c(-0.5,0.5,0.5,0.5), "cm")),
+    plot.caption = element_text(face = "italic", hjust = -0.2),
+    plot.title.position = "plot",
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)
+  )
+NULL 
+```
+
+```{r}
+#| echo: false
+#anova test assumptions, 1-normality (only 2 fish are normally distributed) so not normal 
+invisible(use_me_species %>% 
+  group_by(commonname)%>%
+  shapiro_test(depth))
+#2- variance is equal (0.05)
+invisible(use_me_species %>%
+  levene_test(depth~ commonname))
+NULL 
+
+
+```
+
+```{r}
+anova <- aov(depth ~ commonname, data = use_me_species)
+invisible(summary(anova))
+
+use_me_species <- use_me_species %>%
+  mutate(depth = as.numeric(depth)) %>%
+  filter(!is.na(depth))
+NULL
+#Therefore mean depths vary significantly between the species selected (most observed spearfishing species on the reef of oahu in 2024 NOAA study)
+ 
+
+```
+
+#### Depth Distributions of Common Edible Reef Fish Species, O'ahu
+
+```{r}
+#| echo: false
+#historgrams fixed
+species_groups <- use_me_species %>%
+  distinct(commonname) %>%
+  arrange(commonname) %>%
+  mutate(
+    species_id = row_number(), 
+     panel = ceiling(species_id / 3))
+
+use_me_species %>%
+  left_join(species_groups, by = "commonname") %>%
+  filter(panel == 1) %>%
+  ggplot(aes(x = depth)) +
+  geom_histogram(binwidth = 1, fill = "steelblue", color = "black") +
+  facet_wrap(~ commonname, ncol = 1) +
+  dark_theme_classic() +
+  labs(
+    title = "Depth Distributions of Common Edible Reef Fish Species, O'ahu (Panel 1)",
+    x = "Depth (m)",
+    y = "Count"
+  )
+
+
+use_me_species %>%
+  left_join(species_groups, by = "commonname") %>%
+  filter(panel == 2) %>%
+  ggplot(aes(x = depth)) +
+  geom_histogram(binwidth = 1, fill = "steelblue", color = "black") +
+  facet_wrap(~ commonname, ncol = 1) +
+  dark_theme_classic() +
+  labs(
+    title = "Depth Distributions of Common Edible Reef Fish Species, O'ahu (Panel 2)",
+    x = "Depth (m)",
+    y = "Count"
+  )
+
+use_me_species %>%
+  left_join(species_groups, by = "commonname") %>%
+  filter(panel ==3) %>%
+  ggplot(aes(x = depth)) +
+  geom_histogram(binwidth = 1, fill = "steelblue", color= "black") +
+  facet_wrap(~ commonname, ncol = 1) +
+  dark_theme_classic() +
+  labs(
+    title = "Depth Distributions of Common Edible Reef Fish Species, O'ahu  (Panel 3)",
+    x = "Depth (m)",
+    y = "Count"
+  )
+NULL 
+
+```
+
+```{r}
+#| echo: false
+#| results: hide
+
+trophic_histo <- use_me_species %>%
+  mutate(depth = as.numeric(depth)) %>%
+  filter(!is.na(depth), !is.na(trophic))
+
+
+kw_trophic <- kruskal_test(
+  trophic_histo,
+  depth ~ trophic
+)
+
+#significant difference in distribution of depths between trophic groups
+
+
+use_me_species %>%
+mutate(trophic = factor(trophic)) %>%
+levene_test(depth ~ trophic)
+#Variance is equal 
+NULL 
+```
+
+```{r}
+trophic_aov <- use_me_species %>%
+mutate(trophic = factor(trophic)) %>%
+aov(depth ~ trophic, data = .)
+
+invisible(summary(trophic_aov))
+#significant difference in depths by tropic levels. 
+NULL
+
+```
+
+## Is There a Significant Difference in Depth Between Trophic Groups?
+
+Testing assumptions: Variance was shown to be equal (p= 0.4583), and the distribution was shown to be unequal (p-value= 1.72e-09), so an ANOVA test was done.
+
+ANOVA test result: p-value of 1.26e-10. So yes, there is a significant difference in the depths between the trophic groups. In the filtered data set (only the top 9 observed fish species) only two tropic groups were present: Herbivore and Mobile Invertivore.
+
+```{r}
+#| echo: false
+#| results: hide
+
+use_me_species %>%
+mutate(trophic = factor(trophic)) %>%
+ggplot(aes(x = trophic, y = depth)) +
+geom_boxplot()  +
+labs(
+title = "Depth Distribution of Edible Reef Fish by Trophic Group on Oʻahu",
+x = "Trophic Group",
+y = "Depth (m)",
+caption = "NOAA NCRMP 2024 Data"
+) +
+dark_theme_classic() +
+theme(
+axis.title = element_text(face = "bold", size = 10),
+plot.title = element_text(face = "bold", size = 13, margin = unit(c(1, 1, 1, 1), "cm")),
+plot.caption = element_text(face = "italic", hjust = 0),
+legend.position = "none"
+) 
+NULL 
+
+```
+
+```{r}
+#| echo: false
+#| results: hide
+
+use_me_species %>%
+mutate(trophic = factor(trophic)) %>%
+ggplot(aes(x = depth)) +
+geom_histogram(binwidth = 2, color = "white", fill = NA) +  
+facet_wrap(~ trophic, scales = "free_y") +  
+labs(
+title = "Histogram of Depths for Edible Reef Fish by Trophic Group on Oʻahu",
+x = "Depth (m)",
+y = "Count",
+caption = "NOAA NCRMP 2024 Data"
+) +
+dark_theme_classic() +
+theme(
+axis.title = element_text(face = "bold", size = 10),
+plot.title = element_text(face = "bold", size = 13, margin = unit(c(1, 1, 1, 1), "cm")),
+plot.caption = element_text(face = "italic", hjust = 0),
+strip.text = element_text(face = "bold", size = 10)
+)
+NULL
+
+```
+
+**Data Source:** Ecosystem Sciences Division, Pacific Islands Fisheries Science Center (2025). National Coral Reef Monitoring Program: Stratified Random Surveys (StRS) of Reef Fish across the Hawaiian Archipelago from 2024-05-13 to 2024-08-27 (NCEI Accession 0300659). https://www.ncei.noaa.gov/archive/accession/0300659. In NOAA Pacific Islands Fisheries Science Center, Ecosystem Sciences Division. National Coral Reef Monitoring Program: Stratified random surveys (StRS) of reef fish, including benthic estimate data of the Hawaiian Archipelago. \[indicate subset used\]. NOAA National Centers for Environmental Information. Dataset. https://doi.org/10.7289/v59c6vr5. Accessed \[date\].

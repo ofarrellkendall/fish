@@ -2,18 +2,23 @@ project:
   type: website
   output-dir: docs
 
+execute:
+  echo: false
+
 website:
   title: "fish"
   navbar:
     left:
       - href: index.qmd
         text: Home
+      - info.qmd
       - about.qmd
+
 
 format:
   html:
     theme:
-      - cosmo
+      - cerulean
       - brand
     css: styles.css
     toc: true

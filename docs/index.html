@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -67,12 +33,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a78bc22c21c5275f96438b53095d57b2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -127,6 +92,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./info.html"> 
+<span class="menu-text">Data Source</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -141,107 +110,257 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+  <ul>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#exploratory-data-visualizations" id="toc-exploratory-data-visualizations" class="nav-link" data-scroll-target="#exploratory-data-visualizations"><strong>Exploratory Data Visualizations</strong></a></li>
+  <li><a href="#is-there-a-significant-difference-in-depth-between-the-most-frequently-observed-edible-fish-species" id="toc-is-there-a-significant-difference-in-depth-between-the-most-frequently-observed-edible-fish-species" class="nav-link" data-scroll-target="#is-there-a-significant-difference-in-depth-between-the-most-frequently-observed-edible-fish-species">Is There a Significant Difference in Depth Between the Most Frequently Observed Edible Fish Species?</a></li>
+  <li><a href="#is-there-a-significant-difference-in-depth-between-trophic-groups" id="toc-is-there-a-significant-difference-in-depth-between-trophic-groups" class="nav-link" data-scroll-target="#is-there-a-significant-difference-in-depth-between-trophic-groups">Is There a Significant Difference in Depth Between Trophic Groups?</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-about-solana column-body">
+  <div class="about-entity">
+    <div class="entity-contents">
+      <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">fish</h1>
 </div>
-
-
-
 <div class="quarto-title-meta">
-
-    
-  
-    
   </div>
-  
+</header> <div class="about-links">
+  <a href="https://dlnr.hawaii.gov/dar/files/2014/04/fishes_of_hawaii.pdf" class="about-link" rel="" target="">
+    <i class="bi bi-egg"></i>
+     <span class="about-link-text">State Fishing Manual</span>
+  </a>
+  <a href="https://www.reef.org/species/galleries/hawaii" class="about-link" rel="" target="">
+    <i class="bi bi-vinyl"></i>
+     <span class="about-link-text">Reef Fish Species Gallery</span>
+  </a>
+  <a href="https://www.youtube.com/watch?v=9DcVNNExvNU" class="about-link" rel="" target="">
+    <i class="bi bi-piggy-bank-fill"></i>
+     <span class="about-link-text">Landfishing</span>
+  </a>
+  <a href="mailto:kendallofarrell28@gmail.com" class="about-link" rel="" target="">
+    <i class="bi bi-virus"></i>
+     <span class="about-link-text">Email the website’s owner</span>
+  </a>
+</div>
+      <div class="about-contents"><main class="content" id="quarto-document-content">
 
-
-</header>
-
-
+<section id="summary" class="level2">
+<h2 data-anchor-id="summary">Summary</h2>
+<section id="introduction" class="level4">
+<h4 data-anchor-id="introduction">Introduction:</h4>
+<p>The overarching goal of this study was to provide the O’ahu spearfisher a glimpse into the statistics behind their prey and their prey’s habitats. In other words, what can be pulled from data to shed light on where their desired fish species are found. To do so, The 2024 Hawai’i Reef Fish Survey data set from NOAA was used. The original aim was to compare the various environmental conditions data points (i.e.&nbsp;percent soft coral cover, hard coral cover, sponge cover, sand cover, clam cover, ect.) to fish species to determine if there were trends in what areas desirable fish species were observed. Unfortunately, when the dataset was paired down to observations strictly for O’ahu there were no data points for environmental conditions. So, the study pivoted to look at what data was available: Depth and Tropic group. The result culminated in the exploration of two main questions: Whether there is a significant difference in depth observed between tropic groups, and whether there is a significant difference in depth observed between species. These two questions are not independent as species determine tropic groups, but both hypothesis testing allows for results to be interpreted through two lenses that are important to the spearfisher because predators happen to taste better.</p>
+</section>
+<section id="methods" class="level4">
+<h4 data-anchor-id="methods">Methods:</h4>
+<section id="data-filtering" class="level5">
+<h5 data-anchor-id="data-filtering">Data Filtering</h5>
+<p>First the data set was made relevant to our study’s goal. It was paired down to include only observations from the island of O’ahu, then to observations only from to the shallow (0-6 m) and mid 6-18m) depth bins, and observations of edible fish species.&nbsp; Once here, data exploration showed that only 9 species had enough observations (n&gt;/= 15) to hold up statistically. So, after the exploratory data visualization section, a further paired down data set with only the top 9 species was used. Certain species that are most relevant to the O’ahu Spearfisher, such as the much-coveted Kumu (Common name: Whitesaddle Goatfish), only had 2 observations and so were not able to be used in the analysis.</p>
+</section>
+<section id="analysis" class="level5">
+<h5 data-anchor-id="analysis">Analysis</h5>
+<p>Given that tropic group is a categorical variable there were no two continuous variables to make linear regression models and search for correlations. So, histograms, an Anova test, and box plots were used to explore the relationship between depth and fish species, and depth and tropic group.</p>
+</section>
+<section id="results" class="level5">
+<h5 data-anchor-id="results">Results</h5>
+<p>Depth distributions of edible reef fish on Oʻahu vary significantly both among trophic groups and among commonly observed edible species which aligns with ecological knowledge.</p>
+</section>
+<section id="conclusion" class="level5">
+<h5 data-anchor-id="conclusion">Conclusion</h5>
+<p>In conclusion, Spearfishers of O’ahu you are just one shallow water blackout from a tastier dinner!</p>
+</section>
+</section>
+</section>
+<section id="exploratory-data-visualizations" class="level2">
+<h2 data-anchor-id="exploratory-data-visualizations"><strong>Exploratory Data Visualizations</strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packageLoad <span class="ot">&lt;-</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) {</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="sc">!</span>x[i] <span class="sc">%in%</span> <span class="fu">installed.packages</span>()) {</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">install.packages</span>(x[i])</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">library</span>(x[i], <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">packageLoad</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"palmerpenguins"</span>, <span class="st">"rmarkdown"</span>, <span class="st">"ggthemes"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>              <span class="st">"RColorBrewer"</span>, <span class="st">"viridis"</span>, <span class="st">"ggdark"</span>, <span class="st">"plotly"</span>, <span class="st">"lterdatasampler"</span>, <span class="st">"rstatix"</span>, <span class="st">"usethis"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.2     ✔ tibble    3.3.0
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.1.0     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
-
-Attaching package: 'palmerpenguins'
-
-
-The following objects are masked from 'package:datasets':
-
-    penguins, penguins_raw
-
-
-Loading required package: viridisLite
-
-
-Attaching package: 'plotly'
-
-
-The following object is masked from 'package:ggplot2':
-
-    last_plot
-
-
-The following object is masked from 'package:stats':
-
-    filter
-
-
-The following object is masked from 'package:graphics':
-
-    layout
-
-
-
-Attaching package: 'rstatix'
-
-
-The following object is masked from 'package:stats':
-
-    filter</code></pre>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>This is a Quarto website.</p>
-<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
+</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>NULL</code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+</section>
+<section id="is-there-a-significant-difference-in-depth-between-the-most-frequently-observed-edible-fish-species" class="level2">
+<h2 data-anchor-id="is-there-a-significant-difference-in-depth-between-the-most-frequently-observed-edible-fish-species">Is There a Significant Difference in Depth Between the Most Frequently Observed Edible Fish Species?</h2>
+<p>Testing assumptions results: Two of the nine fish species are normally distributed, while the others are not. Variance is equal (p-value = 0.539)</p>
+<p>Then, the ANOVA test p-value= 3.16e-12 confirms that, yes, the depths between the selected species do vary significantly.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<section id="depth-distributions-of-common-edible-reef-fish-species-oahu" class="level4">
+<h4 data-anchor-id="depth-distributions-of-common-edible-reef-fish-species-oahu">Depth Distributions of Common Edible Reef Fish Species, O’ahu</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-23-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-23-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="is-there-a-significant-difference-in-depth-between-trophic-groups" class="level2">
+<h2 data-anchor-id="is-there-a-significant-difference-in-depth-between-trophic-groups">Is There a Significant Difference in Depth Between Trophic Groups?</h2>
+<p>Testing assumptions: Variance was shown to be equal (p= 0.4583), and the distribution was shown to be unequal (p-value= 1.72e-09), so an ANOVA test was done.</p>
+<p>ANOVA test result: p-value of 1.26e-10. So yes, there is a significant difference in the depths between the trophic groups. In the filtered data set (only the top 9 observed fish species) only two tropic groups were present: Herbivore and Mobile Invertivore.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Data Source:</strong> Ecosystem Sciences Division, Pacific Islands Fisheries Science Center (2025). National Coral Reef Monitoring Program: Stratified Random Surveys (StRS) of Reef Fish across the Hawaiian Archipelago from 2024-05-13 to 2024-08-27 (NCEI Accession 0300659). https://www.ncei.noaa.gov/archive/accession/0300659. In NOAA Pacific Islands Fisheries Science Center, Ecosystem Sciences Division. National Coral Reef Monitoring Program: Stratified random surveys (StRS) of reef fish, including benthic estimate data of the Hawaiian Archipelago. [indicate subset used]. NOAA National Centers for Environmental Information. Dataset. https://doi.org/10.7289/v59c6vr5. Accessed [date].</p>
 
 
-
-</main> <!-- /main -->
+</section>
+</main></div>
+    </div>
+    <img src="IMG_1554.jpg" class="about-image
+  rectangle " style="width: 30em;">
+  </div>
+</div>
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -262,13 +381,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
       if (clz.startsWith('code-annotation-')) {                     

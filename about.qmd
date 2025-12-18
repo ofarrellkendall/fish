@@ -1,5 +1,7 @@
 ---
 title: "About"
+author: "Kendall O'Farrell"
+description: "Kendall has been dining on spearfished dinners since 2025 and hopes to continue into the coming centennial. HUZZAH!"
 ---
 
 About this site
